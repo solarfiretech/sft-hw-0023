@@ -1,0 +1,6 @@
+gs -sDEVICE=pdfwrite \
+    -dNOPAUSE -dBATCH -dSAFER \
+    -sOutputFile=sft-hw-0023.pdf \
+    sft-hw-0023-1.ps \
+    sft-hw-0023-2.ps \
+    sft-hw-0023-3.ps
