@@ -1,2 +1,6 @@
 *.ps
 pcb/#*.sch#
+pcb/*.cmd
+pcb/*.net
+pcb/*.pcb-
+pcb/*.png

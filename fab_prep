@@ -1,0 +1,108 @@
+#! /bin/sh
+#
+# Module: fab_prep
+# Author: T. Gack
+# Created: June 14, 2014
+#
+# Current Revision: 0.2
+# 
+# Revision History:
+#	0.1, 06-14-2014: Initial release
+#	0.2, 03-12-2014: Added the OSH Stencil Directory
+#
+# Description:
+#	This module is used to prep the gerber output from 
+# 	pcb for fabrirication by OSHPark. It also moves
+#	the gerber data into it's own folder.
+#
+
+
+# 
+# Modify these variables as approprite for the project
+# 
+
+PCB=sft-hw-0023
+REV=a
+SRC_DIR=pcb
+ART_DIR=artwork_rev_$REV
+OSH_PARK=$ART_DIR/osh_park
+OSH_STENCIL=$ART_DIR/osh_stencil
+REFERENCE=$ART_DIR/reference
+
+#
+# Check that the artwork directory exists, and if not
+# create it.
+#
+if [ ! -d "$ART_DIR" ]; then
+	mkdir $ART_DIR
+else
+	rm -rf $ART_DIR
+	mkdir $ART_DIR
+fi
+
+
+
+#
+# Check that the OSHPark directory exists, and if not
+# create it.
+#
+if [ ! -d "$OSH_PARK" ]; then
+	mkdir $OSH_PARK
+fi
+
+#
+# Check that the OSH Stensil directory exists, and if not
+# create it.
+#
+if [ ! -d "$OSH_STENCIL" ]; then
+	mkdir $OSH_STENCIL
+fi
+
+#
+# Check that the Gerber backup directory exists, and if not
+# create it.
+#
+if [ ! -d "$REFERENCE" ]; then
+	mkdir $REFERENCE
+fi
+
+
+#
+# Make copies of the gerber files and rename them
+# as appropriate for OSH part.
+#
+cp $SRC_DIR/$PCB.topsilk.gbr $OSH_PARK/$PCB.GTO
+cp $SRC_DIR/$PCB.topmask.gbr $OSH_PARK/$PCB.GTS
+cp $SRC_DIR/$PCB.top.gbr $OSH_PARK/$PCB.GTL
+cp $SRC_DIR/$PCB.bottom.gbr $OSH_PARK/$PCB.GBL
+cp $SRC_DIR/$PCB.bottommask.gbr $OSH_PARK/$PCB.GBS
+# cp $SRC_DIR/$PCB.bottomsilk.gbr $OSH_PARK/$PCB.GBO
+cp $SRC_DIR/$PCB.outline.gbr $OSH_PARK/$PCB.GKO
+cp $SRC_DIR/$PCB.plated-drill.cnc $OSH_PARK/$PCB.XLN
+
+#
+# Make copies of the gerber files for stencils
+#
+cp $SRC_DIR/$PCB.outline.gbr $OSH_STENCIL
+cp $SRC_DIR/$PCB.toppaste.gbr $OSH_STENCIL
+
+
+#
+# Move the gerber data into it's own folder.
+#
+mv $SRC_DIR/$PCB.bottom.gbr $REFERENCE
+mv $SRC_DIR/$PCB.bottommask.gbr $REFERENCE
+#mv $SRC_DIR/$PCB.bottomsilk.gbr $REFERENCE
+mv $SRC_DIR/$PCB.fab.gbr $REFERENCE
+mv $SRC_DIR/$PCB.outline.gbr $REFERENCE
+mv $SRC_DIR/$PCB.plated-drill.cnc $REFERENCE
+mv $SRC_DIR/$PCB.unplated-drill.cnc $REFERENCE
+mv $SRC_DIR/$PCB.top.gbr $REFERENCE
+mv $SRC_DIR/$PCB.topmask.gbr $REFERENCE
+mv $SRC_DIR/$PCB.topsilk.gbr $REFERENCE
+mv $SRC_DIR/$PCB.toppaste.gbr $REFERENCE
+
+
+
+
+
