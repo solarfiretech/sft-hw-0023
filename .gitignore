@@ -1,4 +1,5 @@
 *.ps
+*.zip
 pcb/#*.sch#
 pcb/*.cmd
 pcb/*.net
